@@ -1,0 +1,36 @@
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+<div class="person-bio" *ngIf="person">
+  <img [src]="'https://image.tmdb.org/t/p/w300' + person.profile_path" alt="{{ person.name }}" />
+  <div class="bio-text">
+    <h2>{{ person.name }}</h2>
+
+    <p *ngIf="person.known_for_department">
+      <strong class="label">Department:</strong> 
+      <span class="highlight department">{{ person.known_for_department }}</span>
+    </p>
+
+    <p *ngIf="person.birthday">
+      <strong class="label">Date of Birth:</strong> 
+      <span class="highlight dob">{{ person.birthday }}</span>
+    </p>
+
+    <p *ngIf="person.place_of_birth">
+      <strong class="label">Birthplace:</strong> {{ person.place_of_birth }}
+    </p>
+
+    <p *ngIf="person.biography">{{ person.biography | slice:0:400 }}...</p>
+  </div>
+</div>
+
+
+<h2 *ngIf="personName">{{ personName }}'s Movies & Shows</h2>
+<div class="results-grid">
+  <div *ngFor="let item of work" class="search-result" (click)="goToDetails(item)">
+    <img [src]="'https://image.tmdb.org/t/p/w200' + item.poster_path" alt="{{ item.title || item.name }}">
+    <div>
+      <h3>{{ item.title || item.name }}</h3>
+      <p>Type: {{ item.media_type | titlecase }}</p>
+    </div>
+  </div>
+</div>

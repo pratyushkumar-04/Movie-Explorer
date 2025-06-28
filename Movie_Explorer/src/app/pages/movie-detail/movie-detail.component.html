@@ -1,0 +1,68 @@
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<div *ngIf="moviedetails" class="movie-card">
+  <div class="movie-left">
+    <img [src]="'https://image.tmdb.org/t/p/w500' + moviedetails.poster_path" alt="Movie Poster" />
+  </div>
+
+  <div class="movie-right">
+    <h1>{{ moviedetails.title }}</h1>
+    <p><strong>Tagline:</strong> <em>{{ moviedetails.tagline }}</em></p>
+    <p><strong>Overview:</strong> {{ moviedetails.overview }}</p>
+    <p><strong>Genres:</strong>
+      <span *ngFor="let genre of moviedetails.genres" class="genre-tag">{{ genre.name }}</span>
+    </p>
+    <p><strong>Language:</strong> 🌐 {{ moviedetails.original_language | uppercase }}</p>
+    <p><strong>Runtime:</strong> ⏱️ {{ moviedetails.runtime }} min</p>
+    <p><strong>Release Date:</strong> 📅 {{ moviedetails.release_date }}</p>
+    <p><strong>Rating:</strong> ⭐ {{ moviedetails.vote_average }} / 10 ({{ moviedetails.vote_count }} votes)</p>
+  </div>
+</div>
+
+<!-- Trailer Section -->
+<div *ngIf="safeVideoUrl" class="trailer-container">
+  <h2>🎬 Trailer</h2>
+  <iframe
+    width="720"
+    height="405"
+    [src]="safeVideoUrl"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<!-- where to watch -->
+
+<div *ngIf="providers.length > 0" class="watch-section">
+  <h2>Where to Watch</h2>
+  <div class="watch-grid">
+    <a 
+      *ngFor="let platform of providers"
+      class="watch-card"
+      [href]="watchlink"
+      target="_blank"
+      rel="noopener noreferrer">
+      
+      <img 
+        *ngIf="platform.logo_path"
+        [src]="'https://image.tmdb.org/t/p/w92' + platform.logo_path"
+        alt="{{ platform.provider_name }}" />
+      <p>{{ platform.provider_name }}</p>
+    </a>
+  </div>
+</div>
+
+
+
+<!-- Cast Section -->
+<div *ngIf="cast.length > 0" class="cast-section">
+  <h2>Top Cast</h2>
+  <div class="cast-grid">
+    <div *ngFor="let actor of cast" class="cast-card">
+      <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w185' + actor.profile_path" alt="{{ actor.name }}" />
+      <div class="cast-info">
+        <h4>{{ actor.name }}</h4>
+        <p>as <strong>{{ actor.character }}</strong></p>
+      </div>
+    </div>
+  </div>
+</div>

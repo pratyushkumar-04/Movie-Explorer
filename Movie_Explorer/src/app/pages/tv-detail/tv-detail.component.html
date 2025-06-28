@@ -1,0 +1,66 @@
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<div *ngIf="tvDetails" class="movie-card">
+  <div class="movie-left">
+    <img [src]="'https://image.tmdb.org/t/p/w500' + tvDetails.poster_path" alt="tv Poster" />
+  </div>
+
+  <div class="tv-right">
+    <h1>{{ tvDetails.name }}</h1>
+    <p><strong>Tagline:</strong> <em>{{ tvDetails.tagline }}</em></p>
+    <p><strong>Overview:</strong> {{ tvDetails.overview }}</p>
+    <p><strong>Genres:</strong>
+      <span *ngFor="let genre of tvDetails.genres" class="genre-tag">{{ genre.name }}</span>
+    </p>
+    <p><strong>Language:</strong> 🌐 {{ tvDetails.original_language | uppercase }}</p>
+    <p><strong>Runtime:</strong> ⏱️ {{ tvDetails.episode_run_time[0] }} min</p>
+    <p><strong>First Air Date:</strong> 📅 {{ tvDetails.first_air_date }}</p>
+    <p><strong>Rating:</strong> ⭐ {{ tvDetails.vote_average }} / 10 ({{ tvDetails.vote_count }} votes)</p>
+  </div>
+</div>
+
+<!-- Trailer Section -->
+<div *ngIf="safeVideoUrl" class="trailer-container">
+  <h2>🎬 Trailer</h2>
+  <iframe
+    width="720"
+    height="405"
+    [src]="safeVideoUrl"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<!-- where to watch -->
+
+<div *ngIf="providers.length > 0" class="watch-section">
+  <h2>Where to Watch</h2>
+  <div class="watch-grid">
+    <a 
+      *ngFor="let platform of providers"
+      class="watch-card"
+      [href]="watchlink"
+      target="_blank"
+      rel="noopener noreferrer">
+      
+      <img 
+        *ngIf="platform.logo_path"
+        [src]="'https://image.tmdb.org/t/p/w92' + platform.logo_path"
+        alt="{{ platform.provider_name }}" />
+      <p>{{ platform.provider_name }}</p>
+    </a>
+  </div>
+</div>
+
+<!-- Cast Section -->
+<div *ngIf="tvcast.length > 0" class="cast-section">
+  <h2>Top Cast</h2>
+  <div class="cast-grid">
+    <div *ngFor="let actor of tvcast" class="cast-card">
+      <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w185' + actor.profile_path" alt="{{ actor.name }}" />
+      <div class="cast-info">
+        <h4>{{ actor.name }}</h4>
+        <p>as <strong>{{ actor.character }}</strong></p>
+      </div>
+    </div>
+  </div>
+</div>

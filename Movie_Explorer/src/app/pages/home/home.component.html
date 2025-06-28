@@ -1,0 +1,112 @@
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<!-- Top Toolbar -->
+<div class="top-toolbar">
+  <!-- Region Buttons -->
+  <div class="region-buttons">
+    <button (click)="switchRegion('worldwide')" [class.active]="selectedRegion === 'worldwide'">
+      🌍 Worldwide
+    </button>
+    <button (click)="switchRegion('india')" [class.active]="selectedRegion === 'india'">
+      <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India" class="flag-icon" />
+      India
+    </button>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input type="text" [(ngModel)]="query" (input)="onSearch()" (keyup.enter)="onSearch()" placeholder="Search for a movie..." />
+    <button (click)="onSearch()">Search</button>
+  </div>
+</div>
+
+
+<!-- Suggestions -->
+<ul class="suggestion-list" *ngIf="isSearching && result.length">
+  <li *ngFor="let item of result" (click)="goToDetails(item)">
+    <img [src]="'https://image.tmdb.org/t/p/w45' + (item.poster_path || item.profile_path)" alt="thumb" />
+    {{ item.title || item.name }}
+    <span class="badge">{{ item.media_type | titlecase }}</span>
+  </li>
+</ul>
+<!-- WORLDWIDE SECTION -->
+<div class="home" *ngIf="selectedRegion === 'worldwide'">
+  <h2>🎬 Trending Movies</h2>
+  <div class="movie-grid">
+    <div class="movie-card" *ngFor="let movie of trendingmovies">
+      <a [routerLink]="['/movie', movie.id]">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title" />
+      </a>
+      <p>{{ movie.title }}</p>
+      <span>⭐ {{ movie.vote_average }}</span>
+    </div>
+  </div>
+
+  <h2>📺 Trending TV Shows</h2>
+  <div class="movie-grid">
+    <div class="movie-card" *ngFor="let tv of trendingtv">
+      <a [routerLink]="['/tv', tv.id]">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + tv.poster_path" [alt]="tv.name" />
+      </a>
+      <p>{{ tv.name }}</p>
+      <span>⭐ {{ tv.vote_average }}</span>
+    </div>
+  </div>
+
+  <h2>🏆 Top Rated Movies</h2>
+  <div class="movie-grid">
+    <div class="movie-card" *ngFor="let top of toprated">
+      <a [routerLink]="['/movie', top.id]">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + top.poster_path" [alt]="top.title" />
+      </a>
+      <p>{{ top.title }}</p>
+      <span>⭐ {{ top.vote_average }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- INDIA SECTION -->
+<div class="home" *ngIf="selectedRegion === 'india'">
+  <h2>Trending Movies in India</h2>
+  <div class="movie-grid">
+    <div class="movie-card" *ngFor="let movie of indiaTrendingMovies">
+      <a [routerLink]="['/movie', movie.id]">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title" />
+      </a>
+      <p>{{ movie.title }}</p>
+      <span>⭐ {{ movie.vote_average }}</span>
+    </div>
+  </div>
+
+  <h2>Trending TV Shows in India</h2>
+  <div class="movie-grid">
+    <div class="movie-card" *ngFor="let tv of indiaTrendingTV">
+      <a [routerLink]="['/tv', tv.id]">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + tv.poster_path" [alt]="tv.name" />
+      </a>
+      <p>{{ tv.name }}</p>
+      <span>⭐ {{ tv.vote_average }}</span>
+    </div>
+  </div>
+
+  <h2>🏆 Top Rated Movies in India</h2>
+  <div class="movie-grid">
+    <div class="movie-card" *ngFor="let movie of indiaTopRatedMovies">
+      <a [routerLink]="['/movie', movie.id]">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title" />
+      </a>
+      <p>{{ movie.title }}</p>
+      <span>⭐ {{ movie.vote_average }}</span>
+    </div>
+  </div>
+
+  <h2>🏆 Top Rated TV Shows in India</h2>
+  <div class="movie-grid">
+    <div class="movie-card" *ngFor="let tv of indiaTopRatedTV">
+      <a [routerLink]="['/tv', tv.id]">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + tv.poster_path" [alt]="tv.name" />
+      </a>
+      <p>{{ tv.name }}</p>
+      <span>⭐ {{ tv.vote_average }}</span>
+    </div>
+  </div>
+</div>
