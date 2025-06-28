@@ -74,14 +74,14 @@ A feature-rich **Angular** web app that lets users **search**, **explore**, and 
 ### Setup Steps
 
 
-# Clone & install dependencies
+#### Clone & install dependencies
 git clone https://github.com/pratyushkumar-04/Movie-Explorer.git
 cd Movie-Explorer
 npm install
 
-# Add your TMDB key to environment
+#### Add your TMDB key to environment
 echo "export TMDB_API_KEY=YOUR_KEY" >> ~/.bashrc
-# or directly add to src/environments/environment.ts
+#### or directly add to src/environments/environment.ts
 
-# Serve locally
+#### Serve locally
 ng serve
